@@ -1,0 +1,53 @@
+!pip install openai
+    
+import os
+import openai
+
+# Load your API key from an environment variable or secret management service
+# openai.api_key_path = '/Users/Phoestia/openai-quickstart-python/.env'
+OPENAI_API_KEY='your_api_key' 
+# openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = OPENAI_API_KEY
+
+
+model = "text-davinci-003"
+prompt = "how many planets are there in solar system?" 
+
+response = openai.Completion.create(
+    model=model,  # chose the model: https://platform.openai.com/docs/models/overview
+    prompt=prompt, 
+    temperature=0.9, # Between 0 and 1.Lower temperature means it will take fewer risks, and completions will be more accurate and deterministic. Increasing temperature will result in more diverse completions. 
+    max_tokens=1000, # increase max token to generate response
+    n = 1 # Number of response
+)
+
+# print(response)
+
+# print(response.usage.total_tokens)
+
+for result in response.choices:
+    print(result.text)
+    
+# multiple questions
+model = "text-davinci-003"
+prompt = '''What's the population in Toronto?
+---
+What's the total GDP in Toronto?
+---
+How many companies are based at  Toronto?
+'''
+
+response = openai.Completion.create(
+    model=model,  # chose the model: https://platform.openai.com/docs/models/overview
+    prompt=prompt, 
+    temperature=0.9, # Between 0 and 1.Lower temperature means it will take fewer risks, and completions will be more accurate and deterministic. Increasing temperature will result in more diverse completions. 
+    max_tokens=1000, # increase max token to generate response
+    n = 1 # Number of response
+)
+
+# print(response)
+
+# print(response.usage.total_tokens)
+
+for result in response.choices:
+    print(result.text)
